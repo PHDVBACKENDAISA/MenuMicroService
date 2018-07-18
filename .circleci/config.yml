@@ -25,6 +25,9 @@ jobs:
       - run: sudo docker-php-ext-install zip
 
       # Download and cache dependencies
+      
+      # generate key
+      - run: php artisan key:generate
 
       # composer cache
       - restore_cache:
