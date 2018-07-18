@@ -25,9 +25,6 @@ jobs:
       - run: sudo docker-php-ext-install zip
 
       # Download and cache dependencies
-      
-      # generate key
-      - run: php artisan key:generate
 
       # composer cache
       - restore_cache:
@@ -60,6 +57,9 @@ jobs:
       # prepare the database
       - run: touch storage/testing.sqlite
       - run: php artisan migrate --env=testing --database=sqlite_testing --force
+      
+      # generate key
+      - run: php artisan key:generate
 
       # run tests with phpunit or codecept
       - run: ./vendor/bin/phpunit
