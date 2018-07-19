@@ -2,21 +2,16 @@
 #
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
+defaults: &defaults
+  working_directory: ~/microservice/menu
+  shell: /bin/bash --login
+  docker:
+    - image: circleci/php:7.1.19-fpm-stretch-node-browsers
+    
 version: 2
 jobs:
   prepare:
-    docker:
-      # Specify the version you desire here
-      - image: circleci/php:7.1-jessie-node-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # Using the RAM variation mitigates I/O contention
-      # for database intensive operations.
-      # - image: circleci/mysql:5.7-ram
-      # 
-      # - image: redis:2.8.19
+    <<: *defaults
 
     steps:
       - checkout
@@ -61,16 +56,23 @@ jobs:
       # generate key
       - run: php artisan key:generate
       
+      - persist_to_workspace:
+          root: ~/microservice
+          paths:
+            - ui
   test:
+    <<: *defaults
     steps:
+    
+      - attach_workspace:
+          at: ~/microservice
       # run tests with phpunit or codecept
       - run: ./vendor/bin/phpunit
-      #- run: ./vendor/bin/codecept build
-      #- run: ./vendor/bin/codecept run --xml result.xml
+      
       - store_test_results:
-          path: tests/_output
+          path: microservice/_output
       - store_artifacts:
-          path: tests/_output
+          path: microservice/_output
           
 workflows:
   version: 2
