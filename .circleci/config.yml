@@ -57,9 +57,9 @@ jobs:
       - run: ./vendor/bin/phpunit
       
       - store_test_results:
-          path: microservice/_output
+          path: ~/microservice/_output
       - store_artifacts:
-          path: microservice/_output
+          path: ~/microservice/_output
           
 workflows:
   version: 2
