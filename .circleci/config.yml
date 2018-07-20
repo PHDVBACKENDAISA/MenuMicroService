@@ -46,7 +46,7 @@ jobs:
       - persist_to_workspace:
           root: ~/microservice
           paths:
-            - ui
+            - menu
   test:
     <<: *defaults
     steps:
