@@ -54,7 +54,7 @@ jobs:
       - attach_workspace:
           at: ~/microservice
       # run tests with phpunit or codecept
-      - run: mkdir ~/pizzahutuk/_output
+      - run: mkdir ~/microservice/_output
       - run: ./vendor/bin/phpunit
       
       - store_test_results:
